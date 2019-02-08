@@ -270,9 +270,113 @@ if (!function_exists('JMakeThumbNail')) {
             "file" => $new_file_name
         );
     }
-    function random_string($limit = 10)
+    
+}
+
+function random_string($limit = 10)
+{
+    $date = date('l/j/So/fF/Y/h:i:s/A');
+    return substr(str_shuffle(str_repeat('abcdefghijklmnopqrstuvwxyz0123456789' . $date, 10)), 0, $limit);
+}
+if (!function_exists('get_message')) {
+    function get_message($key = null)
     {
-        $date = date('l/j/So/fF/Y/h:i:s/A');
-        return substr(str_shuffle(str_repeat('abcdefghijklmnopqrstuvwxyz0123456789' . $date, 10)), 0, $limit);
+        $CI = &get_instance();
+        //if (!empty($CI->session->flashdata($key))) { //if want to pass params
+        if ($CI->session->flashdata($key)) { //if want to pass params
+            foreach ($CI->session->flashdata($key) as $flash) {
+                echo $flash;
+            }
+        }
     }
 }
+if (!function_exists('success_message')) {
+    function success_message($message = "")
+    {
+        $CI = &get_instance();
+        $sm = '<div class="alert alert-success alert-dismissible fade show">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        ' . $message . '
+                                    </div>';
+        return $CI->session->set_flashdata('message', $sm);
+    }
+}
+if (!function_exists('danger_message')) {
+    function danger_message($message = "")
+    {
+        $CI = &get_instance();
+        $sm = '<div class="alert alert-danger alert-dismissible fade show">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        ' . $message . '
+                                    </div>';
+        return $CI->session->set_flashdata('message', $sm);
+    }
+}
+if (!function_exists('warning_message')) {
+    function warning_message($message = "")
+    {
+        $CI = &get_instance();
+        $sm = '<div class="alert alert-warning alert-dismissible fade show">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        ' . $message . '
+                                    </div>';
+        return $CI->session->set_flashdata('message', $sm);
+    }
+}
+if (!function_exists('flash_message')) {
+    function flash_message($message = "", $class = '')
+    {
+        $CI = &get_instance();
+        $sm = '<div class="alert ' . $class . ' ">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        ' . $message . '
+                                    </div>';
+        return $CI->session->set_flashdata('message', $sm);
+    }
+}
+if (!function_exists('time_ago')) {
+    function time_ago($date = null, $full = null)
+    {
+        $CI = &get_instance();
+        $now = new DateTime;
+        $ago = new DateTime($date);
+        $diff = $now->diff($ago);
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+        $string = array(
+            'y' => 'year',
+            'm' => 'month',
+            'w' => 'week',
+            'd' => 'day',
+            'h' => 'hour',
+            'i' => 'minute',
+            's' => 'second'
+        );
+        foreach ($string as $k => &$v) {
+            if ($diff->$k) {
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
+        }
+        if (!$full)
+            $string = array_slice($string, 0, 1);
+        return $string ? implode(', ', $string) . ' ago' : 'just now';
+    }
+}
+
+if (!function_exists('trim_text')) {
+    function trim_text($text, $maxLength, $trimIndicator = '...')
+    {
+        if (strlen($text) > $maxLength) {
+            $shownLength = $maxLength - strlen($trimIndicator);
+            if ($shownLength < 1) {
+                throw new \InvalidArgumentException('Second argument for ' . __METHOD__ . '() is too small.');
+            }
+            preg_match('/^(.{0,' . ($shownLength - 1) . '}\w\b)/su', $text, $matches);
+            return (isset($matches[1]) ? $matches[1] : substr($text, 0, $shownLength)) . $trimIndicator;
+        }
+        return $text;
+    }
+}
+

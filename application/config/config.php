@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$config['base_url']                = $_ENV['BASE_URL'];
+$config['base_url']                = getenv('BASE_URL');
 $config['index_page']              = '';
 $config['uri_protocol']            = 'REQUEST_URI';
 $config['url_suffix']              = '';

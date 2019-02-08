@@ -75,7 +75,7 @@ class Welcome extends  \CI_Controller {
 // $data=Sentinel::login($user);
 // $admin = Sentinel::inRole('superadmin');
 // echo json_encode($admin);
-echo getenv('DB_HOSTNAME');
+// echo getenv('DB_HOSTNAME');
 	}
 
 	

@@ -23,13 +23,18 @@ class Layout extends Library
 
     public function defaultHeader(){
 
-        $this->defaulHeader['css']=array("la la laaaaaa", "la laaaa.......");
+        $this->defaulHeader['css']=array(
+            admin_resource_url("css/dashboard_styles.css")
+        );
       $this->headerArray= array_merge_recursive($this->headerArray, $this->defaulHeader);
 
     }
 
     public function defaultFooter(){
-        $this->defaulFooter =array("js"=>array("la la laaaaaa footer", "Footer la laaaa......."),"css"=>array("aaaaaa"));
+        $this->defaulFooter["js"]=array(
+            admin_resource_url("js/main.js")
+        );
+        $this->defaulFooter["css"]=array();
         $this->footerArray= array_merge_recursive($this->footerArray, $this->defaulFooter);
     }
 
@@ -63,15 +68,15 @@ class Layout extends Library
     }
 
 
-    public function view($file,$data=[]){
+    public function admin_view($file,$data=[]){
 
         $this->defaultHeader();
         $this->defaultFooter();
-     
-        $this->ci->load->view("", $this->headerArray);
-        $this->ci->load->view("", $this->headerArray);
-        $this->ci->load->view("", $data);
-        $this->ci->load->view("", $this->footerArray);
+
+        $this->ci->load->view("admin/layouts/header", $this->headerArray);
+        $this->ci->load->view("admin/layouts/sidebar", $this->headerArray);
+        $this->ci->load->view($file, $data);
+        $this->ci->load->view("admin/layouts/footer", $this->footerArray);
 
 
     }
