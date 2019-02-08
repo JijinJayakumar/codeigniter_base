@@ -5,14 +5,18 @@ $autoload['libraries'] = array(
     'database',
     'email',
     'session',
-    'format'
+    'format',
+    'layout'
     
 );
 $autoload['drivers']   = array();
 $autoload['helper']    = array(
     'url',
-    'file'
+    'file',
+    'site_helper'
 );
-$autoload['config']    = array();
+$autoload['config']    = array(
+    'site_urls'
+);
 $autoload['language']  = array();
 $autoload['model']     = array();

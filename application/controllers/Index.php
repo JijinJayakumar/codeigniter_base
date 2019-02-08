@@ -10,15 +10,14 @@ class Index extends \CI_Controller
 
     public function index()
     {
-        // echo "welcome";
-        $this->load->library('layout');
+
         $this->layout->pageDetails("test title","index","sample description");
         $this->layout->headCss(array("css1","css2"));
         $this->layout->headJs(array("js1","js2"));
         $this->layout->footerJs(array("js2","js.........."));
         $this->layout->footerCss(array("cs2","css............"));
 
-        $this->layout->view("","");
+        $this->layout->admin_view("admin/base");
     }
 
 }
