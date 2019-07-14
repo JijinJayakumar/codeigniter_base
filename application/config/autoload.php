@@ -19,4 +19,6 @@ $autoload['config']    = array(
     'site_urls'
 );
 $autoload['language']  = array();
-$autoload['model']     = array();
+$autoload['model']     = array(
+    'crud'
+);
