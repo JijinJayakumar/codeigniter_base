@@ -5,6 +5,7 @@ date_default_timezone_set('Asia/Kolkata');
 $timestamp = date("Y-m-d H:i:s");
 $dotenv = Dotenv\Dotenv::create(__DIR__);
 $dotenv->load();
+define('APP_URL', ($_SERVER['SERVER_PORT'] == 443 ? 'https' : 'http') . "://{$_SERVER['SERVER_NAME']}".str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']));
 switch (ENVIRONMENT)
 {
 	case 'development':
